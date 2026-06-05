@@ -1,0 +1,112 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#define rows 25
+#define cols 60
+
+char canvas[rows][cols];
+#function prototypes
+void newcanvas();
+void displaycanvas();
+void plot(int x,int y, char ch);
+void drawLine(int x1, int y1, int x2, int y2,char ch);
+void drawRectangle(int x, int y, int width, int height,char ch);
+void circlePoints(int xc, int yc, int x, int y,char ch);
+void drawCircle(int xc, int yc, int r, char ch);
+void drawTriangle(int x1, int y1, int x2, int y2,
+                  int x3, int y3,
+                  char ch);
+int main(){
+    int choice;
+    newcanvas();
+
+     while(1)
+    {
+        printf("\n===== 2D GRAPHICS EDITOR =====\n");
+        printf("1. Draw Rectangle\n");
+        printf("2. Draw Line\n");printf("3. Draw Circle\n");
+        printf("4. Draw Triangle\n");
+        printf("5. Delete Rectangle\n");
+        printf("6. Delete Line\n");
+        printf("7. Delete Circle\n");
+        printf("8. Delete Triangle\n");
+        printf("9. Modify Rectangle\n");
+        printf("10. Display Canvas\n");
+        printf("0. exit\n");
+        
+        printf("enter your choice\n");
+        scanf("%d",&choice);
+
+        switch(choice){
+            case 1:
+            {
+                int x, y, w, h;
+                printf("Top-left row col width height: "); scanf("%d%d%d%d", &x, &y, &w, &h);
+
+                drawRectangle(x, y, w, h, '*');
+                break;
+            }
+            case 2:
+            {
+            
+            
+                int x1, y1, x2, y2;
+
+                printf("x1 y1 x2 y2: ");
+                scanf("%d%d%d%d", &x1, &y1, &x2, &y2);
+
+                drawLine(x1, y1, x2, y2, '*');
+                break;
+            }
+ }
+    }
+}
+void drawRectangle(int x, int y, int width, int height, char ch)
+{
+    int i;
+
+    for(i = 0; i < width; i++)
+    {
+        plot(x, y + i, ch);
+        plot(x + height - 1, y + i, ch);
+    }
+
+    for(i = 0; i < height; i++)
+    {
+        plot(x+i,y,ch);
+        plot(x+i,y+width-1,ch);
+    }
+}
+void drawLine(int x1, int y1, int x2, int y2, char ch)
+{
+    int dx = abs(x2 - x1);
+    int dy = abs(y2 - y1);
+
+    int sx = (x1 < x2) ? 1 : -1;
+    int sy = (y1 < y2) ? 1 : -1;
+
+    int err = dx - dy;
+
+    while(1)
+    {
+        plot(x1, y1, ch);
+
+        if(x1 == x2 && y1 == y2)
+            break;
+
+        int e2 = 2 * err;
+
+        if(e2 > -dy)
+        { 
+            err -= dy;
+            x1 += sx;
+        }
+
+        if(e2 < dx)
+        {
+            err += dx;
+            y1 += sy;
+        }
+    }
+}
