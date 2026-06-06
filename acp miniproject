@@ -59,9 +59,70 @@ int main(){
                 drawLine(x1, y1, x2, y2, '*');
                 break;
             }
- }
+            case 3:
+            {
+                 int xc, yc, r;
+
+                printf("Center row col radius: ");
+                scanf("%d%d%d", &xc, &yc, &r);
+
+                drawCircle(xc, yc, r, '*');
+                break;
+            }
+            case 4:
+            {
+                int x1,y1,x2,y2,x3,y3;
+
+                printf("Vertex1 (row col): ");
+                scanf("%d%d",&x1,&y1);
+
+                printf("Vertex2 (row col): ");
+                scanf("%d%d",&x2,&y2);
+
+                printf("Vertex3 (row col): ");
+                scanf("%d%d",&x3,&y3);
+
+                drawTriangle(x1,y1,x2,y2,x3,y3,'*');
+                break;
+            }
+            case 5:
+            {
+                int x,y,w,h;
+
+                printf("Rectangle to delete (row col width height): ");
+                scanf("%d%d%d%d",&x,&y,&w,&h);
+
+                drawRectangle(x,y,w,h,'_');
+                break;
+            }
+        }
     }
 }
+void newcanvas(){
+    int i, j;
+    for(i = 0; i < ROWS; i++)
+    {
+        for(j = 0; j < COLS; j++)
+        {
+            canvas[i][j] = '_';
+        }
+    }
+}
+void displayCanvas()
+{
+    int i, j;
+
+    printf("\n");
+    for(i = 0; i < ROWS; i++)
+    {
+        for(j = 0; j < COLS; j++)
+        {
+            printf("%c ", canvas[i][j]);
+        }
+        printf("\n");
+    }
+}
+
 void drawRectangle(int x, int y, int width, int height, char ch)
 {
     int i;
@@ -109,4 +170,47 @@ void drawLine(int x1, int y1, int x2, int y2, char ch)
             y1 += sy;
         }
     }
+}
+void circlePoints(int xc, int yc, int x, int y, char ch)
+{
+    plot(xc + x, yc + y, ch);
+    plot(xc - x, yc + y, ch);
+    plot(xc + x, yc - y, ch);
+    plot(xc - x, yc - y, ch);
+
+    plot(xc + y, yc + x, ch);
+    plot(xc - y, yc + x, ch);
+    plot(xc + y, yc - x, ch);
+    plot(xc - y, yc - x, ch);
+}
+void drawCircle(int xc, int yc, int r, char ch)
+{
+    int x = 0;
+    int y = r;
+    int d = 1 - r;
+
+    while(x <= y)
+    {
+        circlePoints(xc, yc, x, y, ch);
+
+        if(d < 0)
+        {
+            d += 2 * x + 3;
+        }
+        else
+        {
+            d += 2 * (x - y) + 5;
+            y--;
+        }
+        x++;
+    }
+}
+void drawTriangle(int x1, int y1,
+                  int x2, int y2,
+                  int x3, int y3,
+                  char ch)
+{
+    drawLine(x1, y1, x2, y2, ch);
+    drawLine(x2, y2, x3, y3, ch);
+    drawLine(x3, y3, x1, y1, ch);
 }
