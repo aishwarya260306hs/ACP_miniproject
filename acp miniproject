@@ -95,6 +95,64 @@ int main(){
                 drawRectangle(x,y,w,h,'_');
                 break;
             }
+            case 6:
+            {
+                int x1,y1,x2,y2;
+
+                printf("Line to delete (x1 y1 x2 y2): ");
+                scanf("%d%d%d%d",&x1,&y1,&x2,&y2);
+
+                drawLine(x1,y1,x2,y2,'_');
+                break;
+            }
+            case 7:
+            {
+                int xc,yc,r;
+
+                printf("Circle to delete (center_row center_col radius): ");
+                scanf("%d%d%d",&xc,&yc,&r);
+
+                drawCircle(xc,yc,r,'_');
+                break;
+            }
+            case 8:
+            {
+                int x1,y1,x2,y2,x3,y3;
+
+                printf("Triangle vertices:\n");
+
+                scanf("%d%d%d%d%d%d",
+                      &x1,&y1,&x2,&y2,&x3,&y3);
+
+                drawTriangle(x1,y1,x2,y2,x3,y3,'_');
+                break;
+            }
+            case 9:
+            {
+                int ox, oy, ow, oh;
+                int nx, ny, nw, nh;
+
+                printf("Old rectangle (row col width height): ");
+                scanf("%d%d%d%d",&ox,&oy,&ow,&oh);
+
+                drawRectangle(ox,oy,ow,oh,'_');
+
+                printf("New rectangle (row col width height): ");
+                scanf("%d%d%d%d",&nx,&ny,&nw,&nh);
+
+                drawRectangle(nx,ny,nw,nh,'*');
+                break;
+            }
+        case 10:
+                displayCanvas();
+                break;
+
+            case 0:
+                exit(0);
+
+            default:
+                printf("Invalid Choice!\n");
+
         }
     }
 }
@@ -107,6 +165,7 @@ void newcanvas(){
             canvas[i][j] = '_';
         }
     }
+    return o;
 }
 void displayCanvas()
 {
